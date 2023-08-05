@@ -1,2 +1,2 @@
-# busbytranslator
+# Busby Translator
 KMM Translating App
