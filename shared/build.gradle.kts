@@ -163,3 +163,10 @@ android {
         minSdk = 24
     }
 }
+
+sqldelight {
+    database("TranslateDatabase") {
+        packageName = "me.androidbox.busbytranslator.database"
+        sourceFolders = listOf("sqldelight")
+    }
+}
