@@ -10,7 +10,7 @@ class TranslateUseCase(
     private val historyDataSource: HistoryDataSource
 ) {
 
-    suspend fun execute(fromLanguage: Language, fromText: String, toLanguage: Language): Resource {
+    suspend fun execute(fromLanguage: Language, fromText: String, toLanguage: Language): Resource<String> {
         return try {
             val translatedText = translationClient.translate(
                 fromLanguage = fromLanguage,
@@ -32,7 +32,6 @@ class TranslateUseCase(
         }
         catch (translationException: TranslationException) {
             translationException.printStackTrace()
-
             Resource.Error(translationException)
         }
     }
