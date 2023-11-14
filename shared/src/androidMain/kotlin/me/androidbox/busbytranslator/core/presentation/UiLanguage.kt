@@ -29,7 +29,7 @@ actual class UiLanguage(
         actual fun byCode(languageCode: String): UiLanguage {
             return allLanguages.find { uiLanguage ->
                     uiLanguage.language.languageCode == languageCode
-                } ?: throw IllegalArgumentException("Invalid or unsupported language coder")
+                } ?: throw IllegalArgumentException("Invalid or unsupported language coder $languageCode")
         }
 
         actual val allLanguages: List<UiLanguage>
@@ -38,7 +38,7 @@ actual class UiLanguage(
                     UiLanguage(
                         language = language,
                         languageImageRes = when(language) {
-                            Language.ENGLISH -> R.drawable.english
+                            Language.ENGLISH -> R.drawable.arabic
                             Language.ARABIC -> R.drawable.arabic
                             Language.AZERBAIJANI -> R.drawable.azerbaijani
                             Language.CHINESE -> R.drawable.chinese
@@ -66,6 +66,7 @@ actual class UiLanguage(
                             Language.SWEDISH -> R.drawable.swedish
                             Language.TURKISH -> R.drawable.turkish
                             Language.UKRAINIAN -> R.drawable.ukrainian
+                            Language.THAILAND -> R.drawable.thailand
                         }
                     )
                 }.sortedBy { uiLanguage ->

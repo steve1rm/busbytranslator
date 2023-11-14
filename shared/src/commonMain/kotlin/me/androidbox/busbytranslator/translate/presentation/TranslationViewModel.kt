@@ -14,7 +14,6 @@ import me.androidbox.busbytranslator.core.domain.util.Resource
 import me.androidbox.busbytranslator.core.domain.util.toCommonStateFlow
 import me.androidbox.busbytranslator.core.presentation.UiLanguage
 import me.androidbox.busbytranslator.translate.domain.history.HistoryDataSource
-import me.androidbox.busbytranslator.translate.domain.translate.TranslateError
 import me.androidbox.busbytranslator.translate.domain.translate.TranslateUseCase
 import me.androidbox.busbytranslator.translate.domain.translate.TranslationException
 

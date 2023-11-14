@@ -163,6 +163,9 @@ android {
         minSdk = 24
     }
 }
+dependencies {
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+}
 
 sqldelight {
     database("TranslateDatabase") {

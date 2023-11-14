@@ -31,6 +31,7 @@ enum class Language(
     SPANISH("es", "Spanish"),
     SWEDISH("sv", "Swedish"),
     TURKISH("tr", "Turkish"),
+    THAILAND("th", "Thai"),
     UKRAINIAN("uk", "Ukrainian");
 
     companion object {
