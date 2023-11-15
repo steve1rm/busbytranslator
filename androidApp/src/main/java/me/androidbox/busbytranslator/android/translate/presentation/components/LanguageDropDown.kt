@@ -1,6 +1,7 @@
 package me.androidbox.busbytranslator.android.translate.presentation.components
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -35,22 +36,22 @@ fun LanguageDropDown(
     onSelectedLanguage: (uiLanguage: UiLanguage) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    DropdownMenu(
-        expanded = isOpen,
-        onDismissRequest = onDismiss,
-        modifier = modifier
-    ) {
-        UiLanguage.allLanguages.forEach { uiLanguage ->
-            LanguageDropDownItem(
-                uiLanguage = uiLanguage,
-                onClick = { onSelectedLanguage(uiLanguage) },
-                modifier = modifier.fillMaxWidth()
-            )
+    Box(modifier = modifier) {
+        DropdownMenu(
+            expanded = isOpen,
+            onDismissRequest = onDismiss
+        ) {
+            UiLanguage.allLanguages.forEach { uiLanguage ->
+                LanguageDropDownItem(
+                    uiLanguage = uiLanguage,
+                    onClick = { onSelectedLanguage(uiLanguage) },
+                    modifier = modifier.fillMaxWidth()
+                )
+            }
         }
 
         Row(
             modifier = Modifier
-                .fillMaxWidth()
                 .clickable(onClick = onClick)
                 .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
@@ -58,26 +59,29 @@ fun LanguageDropDown(
             AsyncImage(
                 model = uiLanguage.languageImageRes,
                 contentDescription = uiLanguage.language.languageName,
-                modifier = Modifier.size(30.dp))
+                modifier = Modifier.size(30.dp)
+            )
 
             Spacer(modifier = Modifier.width(16.dp))
 
             Text(
                 text = uiLanguage.language.languageName,
-                color = LightBlue)
+                color = LightBlue
+            )
 
             Spacer(modifier = Modifier.width(16.dp))
 
             Icon(
                 imageVector = if (isOpen) Icons.Default.ArrowDropUp else Icons.Default.ArrowDropDown,
-                contentDescription = if (isOpen) stringResource(id = R.string.close) else stringResource(id = R.string.open),
+                contentDescription = if (isOpen) stringResource(id = R.string.close) else stringResource(
+                    id = R.string.open
+                ),
                 tint = LightBlue,
                 modifier = Modifier.size(30.dp)
             )
         }
     }
 }
-
 
 @Composable
 @Preview(showBackground = true)

@@ -2,8 +2,10 @@ package me.androidbox.busbytranslator.android.translate.presentation.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
@@ -37,8 +39,11 @@ fun TranslateScreen(
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             item {
-                Row(modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
                     LanguageDropDown(
                         uiLanguage = translateState.fromLanguage,
                         isOpen = translateState.isChoosingFromLanguage,
@@ -57,21 +62,21 @@ fun TranslateScreen(
                         onClick = {
                             onTranslateEvent(TranslateEvent.SwapLanguages)
                         })
-                }
 
-                LanguageDropDown(
-                    uiLanguage = translateState.toLanguage,
-                    isOpen = translateState.isChoosingToLanguage,
-                    onClick = {
-                        onTranslateEvent(TranslateEvent.OpenToLanguageDropDown)
-                    },
-                    onDismiss = {
-                        onTranslateEvent(TranslateEvent.StopChoosingLanguage)
-                    },
-                    onSelectedLanguage = { uiLanguage ->
-                        onTranslateEvent(TranslateEvent.ChooseToLanguage(uiLanguage))
-                    }
-                )
+                    LanguageDropDown(
+                        uiLanguage = translateState.toLanguage,
+                        isOpen = translateState.isChoosingToLanguage,
+                        onClick = {
+                            onTranslateEvent(TranslateEvent.OpenToLanguageDropDown)
+                        },
+                        onDismiss = {
+                            onTranslateEvent(TranslateEvent.StopChoosingLanguage)
+                        },
+                        onSelectedLanguage = { uiLanguage ->
+                            onTranslateEvent(TranslateEvent.ChooseToLanguage(uiLanguage))
+                        }
+                    )
+                }
             }
         }
     }

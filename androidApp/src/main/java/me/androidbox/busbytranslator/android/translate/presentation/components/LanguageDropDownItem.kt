@@ -32,10 +32,10 @@ fun LanguageDropDownItem(
         Image(
             painter = painterResource(id = uiLanguage.languageImageRes),
             contentDescription = uiLanguage.language.languageName,
-            modifier = modifier.size(40.dp)
+            modifier = Modifier.size(40.dp)
         )
 
-        Spacer(modifier = modifier.width(16.dp))
+        Spacer(modifier = Modifier.width(16.dp))
 
         Text(text = uiLanguage.language.languageName)
     }
