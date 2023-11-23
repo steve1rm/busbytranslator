@@ -53,7 +53,7 @@ fun LanguageDropDown(
         Row(
             modifier = Modifier
                 .clickable(onClick = onClick)
-                .padding(16.dp),
+                .padding(8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             AsyncImage(
@@ -62,14 +62,14 @@ fun LanguageDropDown(
                 modifier = Modifier.size(30.dp)
             )
 
-            Spacer(modifier = Modifier.width(16.dp))
+            Spacer(modifier = Modifier.width(8.dp))
 
             Text(
                 text = uiLanguage.language.languageName,
                 color = LightBlue
             )
 
-            Spacer(modifier = Modifier.width(16.dp))
+            Spacer(modifier = Modifier.width(8.dp))
 
             Icon(
                 imageVector = if (isOpen) Icons.Default.ArrowDropUp else Icons.Default.ArrowDropDown,
@@ -89,7 +89,7 @@ fun PreviewLanguageDropDown() {
     TranslatorTheme {
         LanguageDropDown(
             uiLanguage = UiLanguage(me.androidbox.busbytranslator.R.drawable.english, Language.ENGLISH),
-            isOpen = true,
+            isOpen = false,
             onClick = {},
             onDismiss = {},
             onSelectedLanguage = { },

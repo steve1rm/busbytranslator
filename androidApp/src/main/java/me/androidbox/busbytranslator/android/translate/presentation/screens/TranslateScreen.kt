@@ -1,6 +1,7 @@
 package me.androidbox.busbytranslator.android.translate.presentation.screens
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -39,12 +40,11 @@ fun TranslateScreen(
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             item {
-                Row(
+                Box(
                     modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     LanguageDropDown(
+                        modifier = Modifier.align(Alignment.CenterStart),
                         uiLanguage = translateState.fromLanguage,
                         isOpen = translateState.isChoosingFromLanguage,
                         onClick = {
@@ -59,11 +59,13 @@ fun TranslateScreen(
                     )
 
                     SwapLanguagesButton(
+                        modifier = Modifier.align(Alignment.Center),
                         onClick = {
                             onTranslateEvent(TranslateEvent.SwapLanguages)
                         })
 
                     LanguageDropDown(
+                        modifier = Modifier.align(Alignment.CenterEnd),
                         uiLanguage = translateState.toLanguage,
                         isOpen = translateState.isChoosingToLanguage,
                         onClick = {
