@@ -38,9 +38,12 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import me.androidbox.busbytranslator.android.R
+import me.androidbox.busbytranslator.android.TranslatorTheme
 import me.androidbox.busbytranslator.android.core.theme.LightBlue
+import me.androidbox.busbytranslator.core.domain.language.Language
 import me.androidbox.busbytranslator.core.presentation.UiLanguage
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -70,8 +73,8 @@ fun TranslateTextField(
             .clickable(onClick = onTextFieldClick)
             .padding(16.dp)
     ) {
-        AnimatedContent(targetState = toText == null || !isTranslating, label = "") {shouldShowIdleState ->
-            if(shouldShowIdleState) {
+        AnimatedContent(targetState = toText, label = "") {
+            if(toText == null || isTranslating) {
                 IdleTranslateTextField(
                     fromText = fromText,
                     isTranslating = isTranslating,
@@ -84,7 +87,7 @@ fun TranslateTextField(
             else {
                 TranslatedTextField(
                     fromText = fromText,
-                    toText = toText.orEmpty(),
+                    toText = toText,
                     fromLanguage = fromLanguage,
                     toLanguage = toLanguage,
                     onCopyClick = onCopyClick,
@@ -196,14 +199,42 @@ private fun IdleTranslateTextField(
         if(fromText.isBlank() && !isFocused) {
             Text(
                 text = stringResource(id = R.string.enter_text_to_translate),
-                color = Color.LightGray)
-            
-            ProgressButton(
-                text = stringResource(id = R.string.translate),
-                isLoading = isTranslating,
-                onClick = onTranslateClick,
-                modifier = Modifier.align(Alignment.BottomEnd)
+                color = Color.LightGray
             )
         }
+
+        ProgressButton(
+            text = stringResource(id = R.string.translate),
+            isLoading = isTranslating,
+            onClick = onTranslateClick,
+            modifier = Modifier.align(Alignment.BottomEnd)
+        )
+    }
+}
+
+@Composable
+@Preview(showBackground = true)
+fun PreviewIdleTranslateTextField() {
+    TranslatorTheme {
+        IdleTranslateTextField(
+            fromText = "Hello",
+            isTranslating = false,
+            onTextChange = { },
+            onTranslateClick = {  })
+    }
+}
+
+@Composable
+@Preview(showBackground = true)
+fun PreviewTranslateTextField() {
+    TranslatorTheme {
+        TranslatedTextField(
+            fromText = "hello",
+            toText = "world",
+            fromLanguage = UiLanguage(me.androidbox.busbytranslator.R.drawable.english, Language.ENGLISH),
+            toLanguage = UiLanguage(me.androidbox.busbytranslator.R.drawable.indonesian, Language.INDONESIAN),
+            onCopyClick = {},
+            onCloseClick = { /*TODO*/ },
+            onSpeakerClick = { /*TODO*/ })
     }
 }
