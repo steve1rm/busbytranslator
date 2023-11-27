@@ -4,11 +4,8 @@ import android.speech.tts.TextToSpeech.QUEUE_FLUSH
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
@@ -23,7 +20,6 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import me.androidbox.busbytranslator.android.translate.presentation.components.LanguageDropDown
-import me.androidbox.busbytranslator.android.translate.presentation.components.RememberTextToSpeech
 import me.androidbox.busbytranslator.android.translate.presentation.components.SwapLanguagesButton
 import me.androidbox.busbytranslator.android.translate.presentation.components.TranslateTextField
 import me.androidbox.busbytranslator.android.translate.presentation.components.rememberTextToSpeech
