@@ -1,5 +1,6 @@
 package me.androidbox.busbytranslator.android.translate.presentation.screens
 
+import android.speech.tts.TextToSpeech.QUEUE_FLUSH
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -22,10 +23,13 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import me.androidbox.busbytranslator.android.translate.presentation.components.LanguageDropDown
+import me.androidbox.busbytranslator.android.translate.presentation.components.RememberTextToSpeech
 import me.androidbox.busbytranslator.android.translate.presentation.components.SwapLanguagesButton
 import me.androidbox.busbytranslator.android.translate.presentation.components.TranslateTextField
+import me.androidbox.busbytranslator.android.translate.presentation.components.rememberTextToSpeech
 import me.androidbox.busbytranslator.translate.presentation.TranslateEvent
 import me.androidbox.busbytranslator.translate.presentation.TranslateState
+import java.util.Locale
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -93,6 +97,7 @@ fun TranslateScreen(
                 val clipboardManager = LocalClipboardManager.current
                 val keyboardController = LocalSoftwareKeyboardController.current
                 val context = LocalContext.current
+                val rememberTextToSpeech = rememberTextToSpeech()
 
                 TranslateTextField(
                     fromText = translateState.fromText,
@@ -122,7 +127,14 @@ fun TranslateScreen(
                         onTranslateEvent(TranslateEvent.CloseTranslation)
                     },
                     onSpeakerClick = {
-                        onTranslateEvent(TranslateEvent.RecordAudio)
+                        rememberTextToSpeech.language = translateState.toLanguage.toLocale() ?: Locale.getDefault()
+
+                        rememberTextToSpeech.speak(
+                            translateState.toText,
+                            QUEUE_FLUSH,
+                            null,
+                            null
+                        )
                     },
                     onTextFieldClick = {
                         onTranslateEvent(TranslateEvent.EditTranslation)
