@@ -38,13 +38,13 @@ actual class UiLanguage(
                     UiLanguage(
                         language = language,
                         languageImageRes = when(language) {
-                            Language.ENGLISH -> R.drawable.arabic
                             Language.ARABIC -> R.drawable.arabic
                             Language.AZERBAIJANI -> R.drawable.azerbaijani
                             Language.CHINESE -> R.drawable.chinese
                             Language.CZECH -> R.drawable.czech
                             Language.DANISH -> R.drawable.danish
                             Language.DUTCH -> R.drawable.dutch
+                            Language.ENGLISH -> R.drawable.english
                             Language.FINNISH -> R.drawable.finnish
                             Language.FRENCH -> R.drawable.french
                             Language.GERMAN -> R.drawable.german

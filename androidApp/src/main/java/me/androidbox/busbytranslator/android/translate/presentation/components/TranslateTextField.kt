@@ -40,6 +40,7 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import me.androidbox.busbytranslator.R.*
 import me.androidbox.busbytranslator.android.R
 import me.androidbox.busbytranslator.android.TranslatorTheme
 import me.androidbox.busbytranslator.android.core.theme.LightBlue
@@ -231,8 +232,8 @@ fun PreviewTranslateTextField() {
         TranslatedTextField(
             fromText = "hello",
             toText = "world",
-            fromLanguage = UiLanguage(me.androidbox.busbytranslator.R.drawable.english, Language.ENGLISH),
-            toLanguage = UiLanguage(me.androidbox.busbytranslator.R.drawable.indonesian, Language.INDONESIAN),
+            fromLanguage = UiLanguage(drawable.english, Language.ENGLISH),
+            toLanguage = UiLanguage(drawable.indonesian, Language.INDONESIAN),
             onCopyClick = {},
             onCloseClick = { /*TODO*/ },
             onSpeakerClick = { /*TODO*/ })

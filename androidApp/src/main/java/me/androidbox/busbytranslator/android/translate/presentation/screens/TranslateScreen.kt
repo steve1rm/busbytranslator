@@ -7,22 +7,29 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import me.androidbox.busbytranslator.android.R
 import me.androidbox.busbytranslator.android.translate.presentation.components.LanguageDropDown
 import me.androidbox.busbytranslator.android.translate.presentation.components.SwapLanguagesButton
 import me.androidbox.busbytranslator.android.translate.presentation.components.TranslateTextField
+import me.androidbox.busbytranslator.android.translate.presentation.components.TranslationHistoryItem
 import me.androidbox.busbytranslator.android.translate.presentation.components.rememberTextToSpeech
+import me.androidbox.busbytranslator.translate.domain.translate.TranslateError
 import me.androidbox.busbytranslator.translate.presentation.TranslateEvent
 import me.androidbox.busbytranslator.translate.presentation.TranslateState
 import java.util.Locale
@@ -34,10 +41,24 @@ fun TranslateScreen(
     onTranslateEvent: (TranslateEvent) -> Unit,
     modifier: Modifier = Modifier) {
 
+    val context = LocalContext.current
+    
+    LaunchedEffect(key1 = translateState.error) {
+        when(translateState.error) {
+            TranslateError.SERVICE_UNAVAILABLE -> context.getString(R.string.error_service_unavailable)
+            TranslateError.CLIENT_ERROR -> context.getString(R.string.error_client_error)
+            TranslateError.SERVER_ERROR -> context.getString(R.string.error_server_error)
+            TranslateError.UNKNOWN_ERROR -> context.getString(R.string.error_unknown_error)
+            null -> null
+        }?.let { errorMessage ->
+            Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show()
+        }
+    }
+    
     Scaffold(
         modifier = modifier,
         floatingActionButton = {
-
+            
         }
     ) { paddingValues ->
         LazyColumn(
@@ -92,7 +113,6 @@ fun TranslateScreen(
             item {
                 val clipboardManager = LocalClipboardManager.current
                 val keyboardController = LocalSoftwareKeyboardController.current
-                val context = LocalContext.current
                 val rememberTextToSpeech = rememberTextToSpeech()
 
                 TranslateTextField(
@@ -136,6 +156,29 @@ fun TranslateScreen(
                         onTranslateEvent(TranslateEvent.EditTranslation)
                     },
                     modifier = Modifier.fillMaxWidth())
+            }
+
+            item {
+                if(translateState.history.isNotEmpty()) {
+                    Text(text = stringResource(R.string.history),
+                        style = MaterialTheme.typography.h2,
+                        color = MaterialTheme.colors.onPrimary)
+                }
+            }
+
+            items(
+                items = translateState.history,
+                key = {
+                    it.id
+                }
+            ) { historyItem ->
+                TranslationHistoryItem(
+                    historyItem = historyItem,
+                    onClick = { uiHistoryItem ->
+                        onTranslateEvent(TranslateEvent.SelectHistory(uiHistoryItem))
+                    },
+                    modifier = Modifier.fillMaxWidth()
+                )
             }
         }
     }
