@@ -9,20 +9,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import dagger.hilt.EntryPoint
+import androidx.navigation.navArgument
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.HiltAndroidApp
-import me.androidbox.busbytranslator.Greeting
 import me.androidbox.busbytranslator.android.core.presentation.Routes
 import me.androidbox.busbytranslator.android.translate.presentation.AndroidTranslateViewModel
 import me.androidbox.busbytranslator.android.translate.presentation.screens.TranslateScreen
-import me.androidbox.busbytranslator.translate.presentation.TranslateState
-import me.androidbox.busbytranslator.translate.presentation.TranslationViewModel
+import me.androidbox.busbytranslator.translate.presentation.TranslateEvent
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -55,8 +52,29 @@ fun TranslateRoot() {
 
             TranslateScreen(
                 translateState = translateState,
-                onTranslateEvent = translationViewModel::onTranslation
+                onTranslateEvent = { translateEvent ->
+                    when(translateEvent) {
+                        is TranslateEvent.RecordAudio -> {
+                            navHostController.navigate(Routes.VOICE_TO_TEXT + "/${translateState.fromLanguage.language.languageCode}")
+                        }
+                        else -> {
+                            translationViewModel.onTranslationEvent(translateEvent)
+                        }
+
+                    }
+                }
             )
+        }
+
+        composable(route = Routes.VOICE_TO_TEXT + "/{languageCode}",
+            arguments = listOf(
+                navArgument(
+                    name = "languageCode") {
+                    type = NavType.StringType
+                    defaultValue = "en"
+                }
+            )) {
+            Text(text = "Voice to Text")
         }
     }
 }

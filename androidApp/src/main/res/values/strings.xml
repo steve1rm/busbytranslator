@@ -12,4 +12,5 @@
     <string name="error_client_error">Client error, please try restarting of re-installing the app</string>
     <string name="error_server_error">Server Error: Please try again later, check your internet connection</string>
     <string name="error_unknown_error">Unknown Error: Please try again later, or contact support</string>
+    <string name="record_audio">Record audio</string>
 </resources>
